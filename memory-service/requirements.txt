@@ -1,0 +1,7 @@
+# glasse memory-service — thin proxy to managed Redis Agent Memory (Iris).
+# Iris does the embeddings + vector search + extraction server-side, so the proxy
+# only needs an HTTP client.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+httpx==0.28.1
+pydantic==2.10.4

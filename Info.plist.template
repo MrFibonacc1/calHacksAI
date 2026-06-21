@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>glasse</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Meta Wearables Device Access Toolkit (Developer Mode: MetaAppID / ClientToken omitted) -->
+	<key>MWDAT</key>
+	<dict>
+		<!-- Custom URL scheme callback (not a Universal Link); free-account OK. -->
+		<key>AppLinkURLScheme</key>
+		<string>glasse://</string>
+		<key>MetaAppID</key>
+		<string>1049074614299437</string>
+		<key>ClientToken</key>
+		<string>AR|YOUR_META_CLIENT_TOKEN</string>
+		<key>TeamID</key>
+		<string>$(DEVELOPMENT_TEAM)</string>
+		<!-- DAT App Model: required for the in-lens Display. On-glasses bundle is
+		     now staged, so the camera session should start normally too. -->
+		<key>DAMEnabled</key>
+		<true/>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>processing</string>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>external-accessory</string>
+	</array>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>com.meta.ar.wearable</string>
+	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Needed to connect to your Meta AI glasses.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Lets your phone find and connect to your glasses over Wi-Fi.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_bonjour._tcp</string>
+	</array>
+
+	<!-- DEV ONLY: lets the app reach the memory-service over http on the local
+	     network (e.g. the Mac running docker). Scoped to local/private addresses —
+	     does NOT disable ATS globally. Remove for production; use an https URL. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Used to describe what's in front of you from the glasses (or your phone camera as a stand-in).</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to caption nearby speech into live text for deaf and hard-of-hearing users.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Used to transcribe nearby speech into live captions on your device.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Used to give turn-by-turn directions while describing your surroundings.</string>
+
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

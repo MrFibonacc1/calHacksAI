@@ -1,0 +1,24 @@
+# Secrets / credentials — never commit
+glasse/Secrets.swift
+.env
+**/.env
+
+# Info.plist holds the Meta ClientToken — commit Info.plist.template instead
+/Info.plist
+
+# Large ML model (download / export separately, don't commit)
+glasse/ISANet.mlmodel
+
+# Build output (compiled apps EMBED the API keys)
+build/
+build_device/
+DerivedData/
+
+# Python (memory-service)
+__pycache__/
+*.pyc
+
+# macOS / Xcode cruft
+.DS_Store
+*.xcuserstate
+xcuserdata/

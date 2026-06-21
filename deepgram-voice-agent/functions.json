@@ -1,0 +1,97 @@
+{
+  "_comment": "glasse accessibility functions for the Deepgram Voice Agent. These are CLIENT-SIDE functions: when the agent calls one, Deepgram sends your app a FunctionCallRequest over the websocket; the app executes it (camera->Claude, captions, memory, etc.) and replies with a FunctionCallResponse. Reuse the app's existing dispatchTool logic. owner_id for memory is supplied by the app from auth, not by the model. Goes in agent.think.functions[] of the Settings message (or add each one in the console).",
+  "functions": [
+    {
+      "name": "describe_scene",
+      "description": "Describe what the glasses camera currently sees, for a blind or low-vision user. Use for 'what's in front of me', 'describe this', 'take a picture and describe it'. Brief by default; pass detail='detailed' when the user asks to be descriptive or wants more.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "detail": { "type": "string", "enum": ["brief", "detailed"], "description": "brief = 1-2 sentences (default); detailed when the user asks for more." },
+          "question": { "type": "string", "description": "Optional specific question about the scene, e.g. 'what color is the mug?' or 'is there a free seat?'" }
+        }
+      }
+    },
+    {
+      "name": "read_text",
+      "description": "Read or translate any text the camera sees, aloud and verbatim: signs, labels, mail, menus, receipts, screens, and braille. Use for 'read this', 'what does this say', 'translate this braille'.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string", "description": "Optional instruction, e.g. 'translate to English', 'just the prices', 'read the whole menu'." }
+        }
+      }
+    },
+    {
+      "name": "identify_objects",
+      "description": "Start or stop continuous, on-device naming of objects ahead (a running 'what's around me'). Use 'start' for 'tell me what's around', 'stop' to end it.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": { "type": "string", "enum": ["start", "stop"], "description": "start or stop continuous object identification." }
+        },
+        "required": ["action"]
+      }
+    },
+    {
+      "name": "start_captions",
+      "description": "Turn on live speech-to-text captions on the lens for a deaf or hard-of-hearing user. Use for 'turn on captions', 'what are they saying', 'caption this conversation'.",
+      "parameters": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "read_fingerspelling",
+      "description": "Open the Sign reader, which reads a signer's fingerspelled letters from the camera onto the lens. Use for 'read fingerspelling', 'sign language mode', 'read signing'.",
+      "parameters": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "navigate",
+      "description": "Give walking directions to a place. Use for 'take me to', 'how do I get to', 'directions to'. Returns spoken, step-by-step guidance.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "destination": { "type": "string", "description": "Where the user wants to go (address or place name)." }
+        },
+        "required": ["destination"]
+      }
+    },
+    {
+      "name": "call_for_help",
+      "description": "Phone the user's saved emergency contact. Use AS SOON AS the user asks for help or signals an emergency ('call for help', 'I need help', 'emergency') — don't stall or ask extra questions. Don't use casually.",
+      "parameters": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "remember_preference",
+      "description": "Store a DURABLE user preference or fact so it applies in future sessions. Call this whenever the user states a lasting preference or routine, e.g. 'always describe in detail', 'I take the bus to work', 'read menus when I'm at a restaurant'. Do NOT call it for one-off requests.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "The memory as a short third-person statement, e.g. 'prefers detailed scene descriptions'." },
+          "type": { "type": "string", "enum": ["preference", "fact", "routine"], "description": "What kind of memory this is." }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "recall_preferences",
+      "description": "Look up what is already known about this user that's relevant to the current request, so you can apply their preferences automatically. Call this at the start of a task when prior context would help (e.g. before describing a scene, to honor their preferred level of detail).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "What you're about to do or the topic, e.g. 'describe scene', 'navigation', 'restaurant'." }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "set_text_to_speech",
+      "description": "Turn the assistant's spoken voice on or off (the lens still shows text either way). Use for 'turn text to speech off', 'stop talking', 'be quiet', 'speak to me again'.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "on": { "type": "boolean", "description": "true = speak replies aloud; false = stay silent (lens only)." }
+        },
+        "required": ["on"]
+      }
+    }
+  ]
+}

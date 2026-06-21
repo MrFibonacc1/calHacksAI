@@ -1,0 +1,12 @@
+# Local run of the proxy against managed Iris (no local Redis needed — Iris is the
+# store, in Redis Cloud). Put IRIS_* in a local .env. For production, deploy this
+# container on an approved cloud (AWS/GCP/Azure) with creds from its secret manager.
+services:
+  memory:
+    build: .
+    ports: ["8080:8080"]
+    environment:
+      IRIS_HOST: ${IRIS_HOST}
+      IRIS_STORE_ID: ${IRIS_STORE_ID}
+      IRIS_API_KEY: ${IRIS_API_KEY}
+      MEMORY_NAMESPACE: ${MEMORY_NAMESPACE:-glasse-dev}
